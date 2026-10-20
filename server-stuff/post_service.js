@@ -2,6 +2,9 @@ import Students from "./students.js";
 import file_service from "./file_service.js";
 import mongoose from "mongoose";
 
+import fs from 'fs/promises'
+import path from 'path'
+
 class Post_service {
     async get_all() {
         const get_students = await Students.find()
@@ -82,9 +85,20 @@ class Post_service {
         return get_student
     }
 
-    async delete(id) {
+    async delete(id, picture) {
         if (!id) {
             throw new Error("введите id")
+        }
+
+        const student_id = await Students.findById(id)
+
+        if (student_id.picture) {
+            const file_path = path.resolve(import.meta.dirname, '..', 'static', student_id.picture)
+            try {
+                await fs.unlink(file_path)
+            } catch (e) {
+                console.log("картинка при удалении не найдена", e.message)
+            }
         }
 
         const delete_student = await Students.findByIdAndDelete(id)
@@ -110,6 +124,21 @@ class Post_service {
         }
 
         return update_student
+    }
+
+    async deleteAll(post, picture) {
+        try {
+            const dir_path = path.resolve(import.meta.dirname, 'static')
+
+            await fs.rm(dir_path, {force: true, recursive: true})
+
+            await fs.mkdir(dir_path, {recursive: true})
+
+            const result = await Students.deleteMany({});
+            return result
+        } catch (e) {
+            throw new Error("ошибка при удалении всех данных", e.message)
+        }
     }
 }
 

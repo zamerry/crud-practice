@@ -51,7 +51,7 @@ class Post_controller {
     // !!!!!!!!!!!!!
     async delete_all(req, res) {
         try {
-            const result = await Students.deleteMany({});
+            const result = await Post_service.deleteAll()
             return res.status(200).json(result);
         } catch (e) {
             return res.status(500).json(e.message);
