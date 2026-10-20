@@ -28,4 +28,4 @@ async function start_app() {
     }
 }
 
-start_app().then()
+start_app()

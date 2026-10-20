@@ -1,13 +1,10 @@
 import Post_service from "./post_service.js";
+import Students from "./students.js";
 
 class Post_controller {
     async create(req, res) {
         try {
-            // const {name, age, russian_grade, math_grade, english_grade} = req.body
-
             const check_picture = req.files ? req.files.picture : null
-            // const file_name = await File_service.save_file(check_picture)
-
             const create_student = await Post_service.create(req.body, check_picture)
             return res.status(200).json(create_student)
         } catch (e) {
@@ -50,6 +47,17 @@ class Post_controller {
             return res.status(500).json(e.message)
         }
     }
+
+    // !!!!!!!!!!!!!
+    async delete_all(req, res) {
+        try {
+            const result = await Students.deleteMany({});
+            return res.status(200).json(result);
+        } catch (e) {
+            return res.status(500).json(e.message);
+        }
+    }
+
 }
 
 export default new Post_controller()

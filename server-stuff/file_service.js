@@ -14,7 +14,7 @@ class File_service {
             const file_name = uuid_v4() + file_format
 
             const dir_path = path.resolve(import.meta.dirname, '..', 'static')
-            fs.mkdir(path.resolve(dir_path), {recursive: true})
+            await fs.mkdir(path.resolve(dir_path), {recursive: true})
             const file_path = path.resolve(dir_path, file_name)
 
             await file.mv(file_path)
