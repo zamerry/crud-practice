@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<button id="load">load</button>
+<ul id="list"></ul>
+<script>
+    const btn = document.getElementById('load')
+    btn.addEventListener('click', async () => {
+        const res = await fetch('http://localhost:5000/tamerlan')
+        const data = await res.json()
+        const list = document.getElementById('list')
+        list.innerHTML = data.map(m => `<li>${m.name}, ${m.age}</li>`).join('')
+    })
+</script>
+</body>
+</html>

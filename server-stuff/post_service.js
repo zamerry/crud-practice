@@ -85,7 +85,7 @@ class Post_service {
         return get_student
     }
 
-    async delete(id, picture) {
+    async delete(id) {
         if (!id) {
             throw new Error("введите id")
         }

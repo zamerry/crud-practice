@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import file_upload from 'express-fileupload'
+import cors from 'cors'
 
 import router from "./server-stuff/router.js";
 import path from "path";
@@ -12,6 +13,7 @@ const port = process.env.PORT || 5000
 const db_url = process.env.DB_URL
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 app.use(file_upload({}))
 app.use(express.static(path.resolve(import.meta.dirname, '..', 'static')))
